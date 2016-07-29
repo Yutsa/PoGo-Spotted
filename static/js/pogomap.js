@@ -5,21 +5,6 @@ function initMap() {
 	zoom: 16
     });
 
-    var coordinates = {
-	"pkm1": {
-	    lat: 49.7747530135454,
-	    lng: 4.72371108934624
-	},
-	"pkm2": {
-	    lat: 49.7719133935275,
-	    lng: 4.71677417022142
-	},
-	"pkm3": {
-	    lat: 49.7742065317445,
-	    lng: 4.71943838132884
-	}
-    }
-
     var date = '<div>2016-07-28 17:16:01.180000</div>'
 	var infoWindow = new google.maps.InfoWindow({
 	    content: date
@@ -38,8 +23,4 @@ function initMap() {
 	    }
 	}) (marker));
     }
-}
-
-function add_marker(lat, lng) {
-    
 }
