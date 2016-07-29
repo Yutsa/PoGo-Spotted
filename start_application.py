@@ -10,7 +10,7 @@ app = Flask(__name__)
 @app.route('/')
 def accueil():
     gmap_api_key = 'AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s'
-    dict_coord = create_coord_json("pogom.db", 10)
+    dict_coord = create_coord_json("pogom.db", 7)
     return render_template('index.html', gmap_api_key=gmap_api_key, coord=dict_coord)
 
 def create_coord_json(db, id_pokemon):
@@ -20,16 +20,16 @@ def create_coord_json(db, id_pokemon):
     cursor = connection.cursor()
 
     id_pokemon = (id_pokemon,)
-    answer = cursor.execute('SELECT encounter_id, latitude, longitude FROM pokemon WHERE pokemon_id=?', id_pokemon)
+    answer = cursor.execute('SELECT encounter_id, latitude, longitude, disappear_time FROM pokemon WHERE pokemon_id=?', id_pokemon)
 
     dict_coord = dict()
 
-
     for entry in answer:
-        dict_coord[entry[0]] = {"lat": entry[1], "lng": entry[2]}
+        dict_coord[entry[0]] = {"lat": entry[1], "lng": entry[2], "date": entry[3]}
 
-    json_data = json.dumps(dict_coord)
-    return json_data
+    coord_json = json.dumps(dict_coord)
+    print(coord_json)
+    return coord_json
 
 if __name__ == '__main__':
     app.secret_key = 'iTwiaKuelcadBajLanEacikyu'

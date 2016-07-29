@@ -5,10 +5,6 @@ function initMap() {
 	zoom: 16
     });
 
-    var date = '<div>2016-07-28 17:16:01.180000</div>'
-	var infoWindow = new google.maps.InfoWindow({
-	    content: date
-	});
     
     for (var key in coordinates) {
 	var coordObj = coordinates[key];
@@ -17,10 +13,17 @@ function initMap() {
 	    map: map,
 	});
 
-	google.maps.event.addListener(marker,'click', (function(marker) {
+	enc_date = coordinates[key]["date"]
+	console.log(enc_date)
+	
+	var infoWindow = new google.maps.InfoWindow({
+	    content: enc_date
+	});
+	
+	google.maps.event.addListener(marker,'click', (function(marker, info) {
 	    return function() {
-		infoWindow.open(map, marker);
+		info.open(map, marker);
 	    }
-	}) (marker));
+	}) (marker, infoWindow));
     }
 }
