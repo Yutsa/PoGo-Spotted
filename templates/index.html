@@ -1,0 +1,15 @@
+{% extends "skeleton.html" %}
+
+{% block mapblock %}
+<p>A map will be there soon.</p>
+<div id="map"></div>
+{% endblock %}
+
+{% block include_script_block %}
+
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap">
+</script>
+
+<script src="{{url_for('static', filename='pogomap.js')}}"></script>
+{% endblock %}
