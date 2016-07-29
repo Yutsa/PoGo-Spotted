@@ -11,5 +11,9 @@
 	src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap">
 </script>
 
-<script src="{{url_for('static', filename='pogomap.js')}}"></script>
+<script src="{{url_for('static', filename='js/pogomap.js')}}"></script>
 {% endblock %}
+
+<script type="text/javascript">
+ initMap()
+</script>

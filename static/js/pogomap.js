@@ -1,8 +1,8 @@
 function initMap() {
     var mapDiv = document.getElementById('map');
     var map = new google.maps.Map(mapDiv, {
-        center: {lat: 49.774, lng: 4.722},
-        zoom: 16
+	center: {lat: 49.774, lng: 4.722},
+	zoom: 16
     });
 
     var coordinates = {
@@ -17,7 +17,7 @@ function initMap() {
 	"pkm3": {
 	    lat: 49.7742065317445,
 	    lng: 4.71943838132884
-	},
+	}
     }
 
     var date = '<div>2016-07-28 17:16:01.180000</div>'
@@ -38,4 +38,8 @@ function initMap() {
 	    }
 	}) (marker));
     }
+}
+
+function add_marker(lat, lng) {
+    
 }
