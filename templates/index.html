@@ -1,7 +1,12 @@
 {% extends "skeleton.html" %}
 
 {% block mapblock %}
-<p>A map will be there soon.</p>
+<form method="POST" action=".">
+  Enter the ID of the pokemon: <br>
+  <input type="text" name="pokemon_id" value="Pokemon ID" />
+  <input type="submit" name="submit" value="Validate" />
+</form>
+
 <div id="map"></div>
 {% endblock %}
 

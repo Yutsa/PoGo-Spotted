@@ -1,17 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import sqlite3
 import json
+from pogospotted.logger import logger
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def accueil():
     gmap_api_key = 'AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s'
-    dict_coord = create_coord_json("pogom.db", 7)
-    return render_template('index.html', gmap_api_key=gmap_api_key, coord=dict_coord)
+    if request.method == 'GET':
+        return render_template('index.html', gmap_api_key=gmap_api_key)
+    else:
+        try:
+            pokemon_id = int(request.form['pokemon_id'])
+            logger.debug('pokemon_id=' + str(pokemon_id))
+            dict_coord = create_coord_json("pogom.db", pokemon_id)
+            return render_template('index.html', gmap_api_key=gmap_api_key, coord=dict_coord)
+        except ValueError:
+            return render_template('index.html', gmap_api_key=gmap_api_key)            
+    
 
 def create_coord_json(db, id_pokemon):
     """Creates a JSON object of the coordinates of every spawn of the
@@ -28,7 +38,6 @@ def create_coord_json(db, id_pokemon):
         dict_coord[entry[0]] = {"lat": entry[1], "lng": entry[2], "date": entry[3]}
 
     coord_json = json.dumps(dict_coord)
-    print(coord_json)
     return coord_json
 
 if __name__ == '__main__':
