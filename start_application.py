@@ -14,6 +14,7 @@ from datetime import datetime
 app = Flask(__name__)
 server_logger = logging.getLogger("pogo-spotted.server")
 
+db = "pogo_spotted.db"
 
 @app.route('/')
 def index():
@@ -22,7 +23,9 @@ def index():
 
 @app.route('/map/')
 def map():
-    return render_template('map.html')
+    pokemon_dict = create_coord_json(db)
+    server_logger.debug(pokemon_dict)
+    return render_template('map.html', pkm_info=pokemon_dict)
 
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():
@@ -39,7 +42,7 @@ def sightings():
                           request.form['date_enc'],
                           request.form['lat'],
                           request.form['lng'],
-                          "pogo_spotted.db")
+                          db)
         
         return render_template('report_complete.html')
     

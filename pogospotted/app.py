@@ -4,24 +4,27 @@
 """This script handles the data from the database and so on."""
 import sqlite3
 import json
+import time
 
 import logging
 from pogospotted.logger import logger
 
 app_logger = logging.getLogger('pogo-spotted.app')
 
-def create_coord_json(db, id_pokemon):
+def create_coord_json(db, id_pokemon=1):
     """Creates a JSON object of the coordinates of every spawn of the
     pokemon_id supplied. For that it looks into the db database."""
     connection = sqlite3.connect(db)
     cursor = connection.cursor()
     id_pokemon = (id_pokemon,)
-    answer = cursor.execute('SELECT encounter_id, latitude, longitude, disappear_time FROM pokemon WHERE pokemon_id=?', id_pokemon)
+    answer = cursor.execute("SELECT *" \
+                            "FROM sightings")
 
     dict_coord = dict()
 
     for entry in answer:
-        dict_coord[entry[0]] = {"lat": entry[1], "lng": entry[2], "date": entry[3]}
+        dict_coord[entry[0]] = {"id": entry[1], "lat": entry[3],
+                                "lng": entry[4], "date": entry[2]}
 
     if not dict_coord:
         app_logger.debug('The dict gotten from the DB request is empty.')
@@ -49,13 +52,15 @@ def add_pokemon_to_db(id, enc_date, lat, lng, db_name):
     cursor = conn.cursor()
     
     cursor.execute("CREATE TABLE IF NOT EXISTS 'sightings'" \
-                   "('pokemon_id' INT,"\
+                   "('enc_id' INT PRIMARY KEY,"\
+                   "'pokemon_id' INT,"\
                    "'enc_date' TEXT, 'lat' REAL,"\
                    "'lng' REAL)")
     
-    request = "INSERT INTO 'sightings' (pokemon_id, enc_date,"\
-              "lat, lng) VALUES ({}, "\
+    request = "INSERT INTO 'sightings' (enc_id, pokemon_id, enc_date,"\
+              "lat, lng) VALUES ({}, {}, "\
                    "'{}', {}, {})".format(
+                       time.time(),
                        id,
                        enc_date,
                        lat,

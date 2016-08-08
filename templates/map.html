@@ -16,7 +16,7 @@
 	</a>
 	<ul class="right hide-on-med-and-down">
 	    <li><a href="{{url_for('index')}}">Home</a></li>
-	    <li><a href="{{url_for('map')}}">Map</a></li>
+	    <li><a href="{{url_for('sightings')}}">Report Sighting</a></li>
 	</ul>
 	<ul class="side-nav" id="navbar">
 	    <li><a href="{{url_for('index')}}">Home</a></li>
@@ -37,6 +37,10 @@
 {% endblock %}
 
 {% block script %}
+<script type="text/javascript">
+  
+</script>
+
 <script
     src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap"
    async defer></script>
