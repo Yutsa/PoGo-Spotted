@@ -30,6 +30,23 @@
 <main class="container">
   <div class="row">
     <br />
+    <form>
+      <div class="input-field col s12">
+	<select multiple class="icons">
+	  	{% for pokemon_name in pokemons %}
+		{% set pokemon_id = pokemons.index(pokemon_name) + 1 %}
+		{% set img = "img/sprites/" ~ pokemon_id ~ ".png" %}
+	  <option value="{{pokemon_id}}"
+		  data-icon="{{url_for('static', filename=img)}}"
+		  class="right">{{pokemon_name|title}}</option>
+	  {% endfor %}
+	</select>
+	<label>Pokemons to Hide</label>
+      </div>
+    </form>
+  </div>
+  
+  <div class="row">
     <div id="map" class="col s6 m12">
       
     </div>

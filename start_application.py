@@ -25,10 +25,12 @@ def index():
 @app.route('/map/')
 def map():
     pokemon_dict = create_coord_json(db)
+    pokemon_list = create_pokemons_list()
     server_logger.debug(pokemon_dict)
     return render_template('map.html',
                            pkm_info=pokemon_dict,
-                           gmap_api_key=gmap_api_key)
+                           gmap_api_key=gmap_api_key,
+                           pokemons=pokemon_list)
 
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():
