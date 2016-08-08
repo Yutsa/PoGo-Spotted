@@ -3,9 +3,7 @@
   <head>		
     <meta charset="UTF-8"> 
     <title>PoGo-Spotted</title>
-    <link rel="stylesheet" href="{{url_for('static',
-				 filename='css/style.css')}}"
-	  type="text/css" media="screen" />
+    {% block css %}{% endblock %}
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons"
 	  rel="stylesheet">
@@ -37,11 +35,11 @@
 		 filename='js/materialize.min.js')}}">
     </script>
 
-        <script type="text/javascript"
+    <script type="text/javascript"
 	    src="{{url_for('static',
 		 filename='js/init.js')}}">
     </script>
-    
+
+    {% block script %}{% endblock %}
   </body>
-  {% block include_script_block %}{% endblock %}
 </html>

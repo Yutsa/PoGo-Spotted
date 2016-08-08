@@ -1,0 +1,38 @@
+{% extends "skeleton.html" %}
+
+{% block nav %}
+<nav class="light-blue">
+    <div class="nav-wrapper">
+	<a href="#!" class="brand-logo">PoGo-Spotted</a>
+	<a href="#" data-activates="navbar"
+	   class="button-collapse">
+	    <i class="material-icons">menu</i>
+	</a>
+	<ul class="right hide-on-med-and-down">
+	    <li><a href="{{url_for('index')}}">Home</a></li>
+	    <li><a href="{{url_for('map')}}">Map</a></li>
+	</ul>
+	<ul class="side-nav" id="navbar">
+	    <li><a href="{{url_for('index')}}">Home</a></li>
+	    <li><a href="{{url_for('map')}}">Map</a></li>
+	</ul>
+    </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+<main>
+  <div class="valign-wrapper" style="height: 100%">
+      <div class="container">
+      <div class="valign">
+	<div class="row">
+	  <h1 class="col s12 center-align">Sigthing Report Submitted</h1>
+	</div>
+	<div class="row">
+	  <h4 class="col s12 center-align">Thanks for your contribution</h4>
+	</div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

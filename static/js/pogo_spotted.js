@@ -4,11 +4,7 @@ function initMap() {
 	center: {lat: 49.774, lng: 4.722},
 	zoom: 16
     });
-
-    var marker = new google.maps.Marker({
-	map: map
-    });
-
+    
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -16,15 +12,9 @@ function initMap() {
 		lat: position.coords.latitude,
 		lng: position.coords.longitude
             };
-
-	    marker.setPosition(pos);
-	    marker.setDraggable(true);
+	    
             map.setCenter(pos);
 
-	    document.getElementById('lat').value= pos["lat"];
-	    document.getElementById('lng').value= pos["lng"];
         });
-    } else {
-	maker.setPosition(map.getCenter());
     }
 }

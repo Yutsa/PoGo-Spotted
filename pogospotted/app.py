@@ -41,3 +41,25 @@ def create_pokemons_list():
         pokemons.append(pkm_list[1])
     return pokemons
     
+def add_pokemon_to_db(id, enc_date, lat, lng, db_name):
+    """
+    Adds a pokemon sighting to the databse
+    """
+    conn = sqlite3.connect(db_name)
+    cursor = conn.cursor()
+    
+    cursor.execute("CREATE TABLE IF NOT EXISTS 'sightings'" \
+                   "('pokemon_id' INT,"\
+                   "'enc_date' TEXT, 'lat' REAL,"\
+                   "'lng' REAL)")
+    
+    request = "INSERT INTO 'sightings' (pokemon_id, enc_date,"\
+              "lat, lng) VALUES ({}, "\
+                   "'{}', {}, {})".format(
+                       id,
+                       enc_date,
+                       lat,
+                       lng
+                   )
+    cursor.execute(request)
+    conn.commit()

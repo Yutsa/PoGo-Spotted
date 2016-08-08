@@ -5,9 +5,11 @@
 from flask import Flask, render_template, jsonify, request
 
 import logging
-from pogospotted.logger import logger
 
-from pogospotted.app import create_coord_json, create_pokemons_list
+from pogospotted.logger import logger
+from pogospotted.app import *
+
+from datetime import datetime
 
 app = Flask(__name__)
 server_logger = logging.getLogger("pogo-spotted.server")
@@ -20,15 +22,26 @@ def index():
 
 @app.route('/map/')
 def map():
-    return "map"
+    return render_template('map.html')
 
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():
     if request.method == 'GET':
+        gmap_api_key = "AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s"
         pokemon_list = create_pokemons_list()
-        return render_template('sightings.html', pokemons=pokemon_list)
+        curr_time = datetime.now().strftime("%d/%m/%Y %H:%M")
+        return render_template('sightings.html',
+                               pokemons=pokemon_list,
+                               date=curr_time,
+                               gmap_api_key=gmap_api_key)
     else:
-        return "Got a POST request"
+        add_pokemon_to_db(request.form['pokemon_id'],
+                          request.form['date_enc'],
+                          request.form['lat'],
+                          request.form['lng'],
+                          "pogo_spotted.db")
+        
+        return render_template('report_complete.html')
     
 if __name__ == '__main__':
     app.secret_key = 'iTwiaKuelcadBajLanEacikyu'
