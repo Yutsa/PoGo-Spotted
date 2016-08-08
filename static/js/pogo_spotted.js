@@ -19,10 +19,13 @@ function initMap() {
     }
     
     for (var key in coordinates) {
+	var img = "../static/img/sprites/".concat(coordinates[key]["id"], ".png");
+	
 	var coordObj = coordinates[key];
 	var marker = new google.maps.Marker({
 	    position: coordObj,
 	    map: map,
+	    icon: img
 	});
 
 	enc_date = coordinates[key]["date"]
