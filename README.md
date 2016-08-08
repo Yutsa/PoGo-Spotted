@@ -50,3 +50,14 @@ network.
 
 The project is configured to use the debug settings for now, you can
 change it by remove `debug=True` in `app.run(host='0.0.0.0', debug=True)` (It's inside start_application.py)
+
+How to contribute
+===================
+
+Feel free to modify and propose changes ! I haven't looked into 
+licencing yet but this'll probably be under GPL3. Anyways it's free
+software that's for sure !
+
+Be sure to make changes on the dev branch, I'll merge changes into 
+master after testing and so on.
+
