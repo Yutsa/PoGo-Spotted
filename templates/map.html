@@ -1,28 +1,28 @@
 {% extends "skeleton.html" %}
 
 {% block css %}
-    <link rel="stylesheet" href="{{url_for('static',
-				 filename='css/map.css')}}"
-	  type="text/css" media="screen" />
+<link rel="stylesheet" href="{{url_for('static',
+			     filename='css/map.css')}}"
+      type="text/css" media="screen" />
 {% endblock %}
 
 {% block nav %}
 <nav class="light-blue">
-    <div class="nav-wrapper">
-	<a href="#!" class="brand-logo">PoGo-Spotted</a>
-	<a href="#" data-activates="navbar"
-	   class="button-collapse">
-	    <i class="material-icons">menu</i>
-	</a>
-	<ul class="right hide-on-med-and-down">
-	    <li><a href="{{url_for('index')}}">Home</a></li>
-	    <li><a href="{{url_for('sightings')}}">Report Sighting</a></li>
-	</ul>
-	<ul class="side-nav" id="navbar">
-	    <li><a href="{{url_for('index')}}">Home</a></li>
-	    <li><a href="{{url_for('map')}}">Map</a></li>
-	</ul>
-    </div>
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">PoGo-Spotted</a>
+    <a href="#" data-activates="navbar"
+       class="button-collapse">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="{{url_for('index')}}">Home</a></li>
+      <li><a href="{{url_for('sightings')}}">Report Sighting</a></li>
+    </ul>
+    <ul class="side-nav" id="navbar">
+      <li><a href="{{url_for('index')}}">Home</a></li>
+      <li><a href="{{url_for('sightings')}}">Report Sighting</a></li>
+    </ul>
+  </div>
 </nav>
 {% endblock %}
 
@@ -33,16 +33,17 @@
     <div id="map" class="col s6 m12">
       
     </div>
+  </div>
 </main>
 {% endblock %}
 
 {% block script %}
 <script type="text/javascript">
-  
+  var coordinates = {{pkm_info|safe}}
 </script>
 
 <script
-    src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap"
+   src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap"
    async defer></script>
 
 <script src="{{url_for('static',

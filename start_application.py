@@ -15,6 +15,7 @@ app = Flask(__name__)
 server_logger = logging.getLogger("pogo-spotted.server")
 
 db = "pogo_spotted.db"
+gmap_api_key = "AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s"
 
 @app.route('/')
 def index():
@@ -25,12 +26,13 @@ def index():
 def map():
     pokemon_dict = create_coord_json(db)
     server_logger.debug(pokemon_dict)
-    return render_template('map.html', pkm_info=pokemon_dict)
+    return render_template('map.html',
+                           pkm_info=pokemon_dict,
+                           gmap_api_key=gmap_api_key)
 
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():
     if request.method == 'GET':
-        gmap_api_key = "AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s"
         pokemon_list = create_pokemons_list()
         curr_time = datetime.now().strftime("%d/%m/%Y %H:%M")
         return render_template('sightings.html',
