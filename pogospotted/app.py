@@ -29,3 +29,15 @@ def create_coord_json(db, id_pokemon):
         app_logger.debug('The dict gotten from the DB request is not empty.')
     coord_json = json.dumps(dict_coord)
     return coord_json
+
+def create_pokemons_list():
+    """
+    Creates a dict with all pokemon names and their pokemon_id as key
+    """
+    file = open('static/pokemons.txt', 'r')
+    pokemons = list()
+    for line in file:
+        pkm_list = line.split(',')
+        pokemons.append(pkm_list[1])
+    return pokemons
+    

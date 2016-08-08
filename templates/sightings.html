@@ -19,3 +19,25 @@
   </div>
 </nav>
 {% endblock %}
+
+{% block main %}
+<main class="container">
+  <div class="row">
+    <form action="." method="post">
+      <div class="input-field col s12">
+	<select>
+	  {% for pokemon_name in pokemons %}
+	  {% set pokemon_id = pokemons.index(pokemon_name) + 1 %}
+	  {% set img = "img/sprites/" ~ pokemon_id ~ ".png" %}
+	  <option value="{{pokemon_id}}"
+		  data-icon="{{url_for('static',
+			     filename=img)}}"
+		  class="left">{{pokemon_name|title}}
+	  </option>
+	  {% endfor %}
+	</select>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}
