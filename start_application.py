@@ -14,7 +14,7 @@ server_logger = logging.getLogger("pogo-spotted.server")
 
 
 @app.route('/', methods=['GET', 'POST'])
-def accueil():
+def index():
     gmap_api_key = 'AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s'
     if request.method == 'GET':
         return render_template('index.html', gmap_api_key=gmap_api_key)
@@ -26,7 +26,15 @@ def accueil():
             return render_template('index.html', gmap_api_key=gmap_api_key, coord=dict_coord)
         except ValueError:
             return render_template('index.html', gmap_api_key=gmap_api_key)            
+
+@app.route('/map/')
+def map():
+    return "map"
+
+@app.route('/sightings/')
+def sightings():
+    return render_template('sightings.html')
     
 if __name__ == '__main__':
     app.secret_key = 'iTwiaKuelcadBajLanEacikyu'
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)

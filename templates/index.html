@@ -1,28 +1,22 @@
 {% extends "skeleton.html" %}
 
-{% block mapblock %}
-<form method="POST" action=".">
-  Enter the ID of the pokemon: <br>
-  <input type="text" name="pokemon_id" value="Pokemon ID" />
-  <input type="submit" name="submit" value="Validate" />
-</form>
-
-<div id="map"></div>
-{% endblock %}
-
-{% block include_script_block %}
-
-<script>
- var test_lat = 49.7725792486481
- var test_lng = 4.72990389415167
-
- var coordinates = {{coord|safe}}
-
-</script>
-
-<script src="{{url_for('static', filename='js/pogomap.js')}}"></script>
-
-<script async defer
-	src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap">
-</script>
+{% block nav %}
+<main>
+  <div class="valign-wrapper" style="height: 100%">
+    <div class="container">
+      <div class="section center valign">
+	<div class="row">
+	  <a class="waves-effect waves-light btn-large light-blue"
+	     href="{{url_for('map')}}">See Map</a>
+	</div>
+	<div class="row">
+	  <a class="waves-effect waves-light btn-large light-blue"
+	     href="{{url_for('sightings')}}">
+	    Report Sighting
+	  </a>
+	</div>
+      </div>
+    </div>
+  </div>
+</main>
 {% endblock %}
