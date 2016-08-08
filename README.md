@@ -25,3 +25,18 @@ purpose.
 
 The app uses Flask own webserver and SQLite so this is not optimized
 for deployment in production or anything.
+
+How to use it ?
+=================
+
+Execute `start_application.py`, this will launch a webserver.
+
+You can access the webserver by going to `localhost:5000` on your own
+computer, `your_local_ip:5000` on a device in the same network
+as yours or `your_public_ip:5000` on another device not in the same
+network.
+
+**Note**: You have to forward your 5000 port to access the server from a computer outside your network.
+
+The project is configured to use the debug settings for now, you can
+change it by remove `debug=True` in `app.run(host='0.0.0.0', debug=True)` (It's inside start_application.py)
