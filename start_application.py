@@ -15,7 +15,7 @@ app = Flask(__name__)
 server_logger = logging.getLogger("pogo-spotted.server")
 
 db = "pogo_spotted.db"
-gmap_api_key = "AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s"
+gmap_api_key = ""
 
 @app.route('/')
 def index():

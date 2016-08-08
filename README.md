@@ -17,6 +17,11 @@ You can then consult a map to see every spawnpoints !
 
 In next releases you'll be able to filter the result to display on the map.
 
+Dependencies
+==============
+
+You'll need `python3` and `Flask`.
+
 Disclaimer
 ==========
 
@@ -28,6 +33,11 @@ for deployment in production or anything.
 
 How to use it ?
 =================
+
+First you'll need a Google Maps API key.
+
+Then open `start_application.py` and paste your API key here :
+`gmap_api_key = your_api_key`
 
 Execute `start_application.py`, this will launch a webserver.
 
