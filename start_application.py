@@ -10,11 +10,16 @@ from pogospotted.logger import logger
 from pogospotted.app import *
 
 from datetime import datetime
+import os.path
 
 app = Flask(__name__)
 server_logger = logging.getLogger("pogo-spotted.server")
 
-db = "pogo_spotted.db"
+if os.path.isfile("/var/www/PoGo-Spotted/"):
+    DATABASE = "/var/www/PoGo-Spotted/pogo_spotted.db"
+else:
+    DATABASE = "pogo_spotted.db"
+    
 gmap_api_key = "AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s"
 
 @app.route('/')
@@ -24,7 +29,7 @@ def index():
 
 @app.route('/map/', methods=['POST', 'GET'])
 def map():
-    pokemon_dict = create_coord_json(db)
+    pokemon_dict = create_coord_json(DATABASE)
     pokemon_list = create_pokemons_list()
     ids_to_hide = ()
     if request.method == 'POST':
@@ -50,7 +55,7 @@ def sightings():
                           request.form['date_enc'],
                           request.form['lat'],
                           request.form['lng'],
-                          db)
+                          DATABASE)
         
         return render_template('report_complete.html')
     

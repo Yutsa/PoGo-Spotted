@@ -11,6 +11,8 @@ from pogospotted.logger import logger
 
 app_logger = logging.getLogger('pogo-spotted.app')
 
+
+
 def create_coord_json(db, id_pokemon=1):
     """Creates a JSON object of the coordinates of every spawn of the
     pokemon_id supplied. For that it looks into the db database."""
