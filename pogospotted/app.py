@@ -5,12 +5,12 @@
 import sqlite3
 import json
 import time
-
+import os
 import logging
 from pogospotted.logger import logger
 
 app_logger = logging.getLogger('pogo-spotted.app')
-
+here = os.path.dirname(__file__)
 
 
 def create_coord_json(db, id_pokemon=1):
@@ -19,6 +19,14 @@ def create_coord_json(db, id_pokemon=1):
     connection = sqlite3.connect(db)
     cursor = connection.cursor()
     id_pokemon = (id_pokemon,)
+
+    # Create the table if it doesn't exist.
+    cursor.execute("CREATE TABLE IF NOT EXISTS 'sightings'" \
+                   "('enc_id' INT PRIMARY KEY,"\
+                   "'pokemon_id' INT,"\
+                   "'enc_date' TEXT, 'lat' REAL,"\
+                   "'lng' REAL)")
+
     answer = cursor.execute("SELECT *" \
                             "FROM sightings")
 
@@ -35,7 +43,8 @@ def create_pokemons_list():
     """
     Creates a dict with all pokemon names and their pokemon_id as key
     """
-    file = open('static/pokemons.txt', 'r')
+#    file = open('static/pokemons.txt', 'r')
+    file = open(os.path.join(here, '../static/pokemons.txt'), 'r')
     pokemons = list()
     for line in file:
         pkm_list = line.split(',')
