@@ -10,7 +10,7 @@ fh = logging.FileHandler('logging.log')
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG) #TO CHANGE WHEN IN PRODUCTION
+ch.setLevel(logging.INFO) #TO CHANGE WHEN IN PRODUCTION
 
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 fh.setFormatter(formatter)

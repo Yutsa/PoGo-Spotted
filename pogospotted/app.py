@@ -26,10 +26,6 @@ def create_coord_json(db, id_pokemon=1):
         dict_coord[entry[0]] = {"id": entry[1], "lat": entry[3],
                                 "lng": entry[4], "date": entry[2]}
 
-    if not dict_coord:
-        app_logger.debug('The dict gotten from the DB request is empty.')
-    else:
-        app_logger.debug('The dict gotten from the DB request is not empty.')
     coord_json = json.dumps(dict_coord)
     return coord_json
 

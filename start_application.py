@@ -22,15 +22,19 @@ def index():
     return render_template('index.html')
                 
 
-@app.route('/map/')
+@app.route('/map/', methods=['POST', 'GET'])
 def map():
     pokemon_dict = create_coord_json(db)
     pokemon_list = create_pokemons_list()
-    server_logger.debug(pokemon_dict)
+    ids_to_hide = ()
+    if request.method == 'POST':
+        ids_to_hide = request.form.getlist('ids[]')
+        server_logger.debug("Hiding the following ids: " + str(ids_to_hide))
     return render_template('map.html',
                            pkm_info=pokemon_dict,
                            gmap_api_key=gmap_api_key,
-                           pokemons=pokemon_list)
+                           pokemons=pokemon_list,
+                           ids_to_hide=ids_to_hide)
 
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():
@@ -52,4 +56,4 @@ def sightings():
     
 if __name__ == '__main__':
     app.secret_key = 'iTwiaKuelcadBajLanEacikyu'
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
