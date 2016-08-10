@@ -15,10 +15,10 @@ import os.path
 app = Flask(__name__)
 server_logger = logging.getLogger("pogo-spotted.server")
 
-if os.path.isfile("/var/www/PoGo-Spotted/"):
+if os.path.exists("/var/www/PoGo-Spotted/"):
     DATABASE = "/var/www/PoGo-Spotted/pogo_spotted.db"
 else:
-    DATABASE = "pogo_spotted.db"
+    DATABASE = "pogo_spotted_local.db"
     
 gmap_api_key = "AIzaSyBCKNhUxknKzs9doE_m_cSCLJco260CY-s"
 
