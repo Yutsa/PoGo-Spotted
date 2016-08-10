@@ -2,11 +2,15 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import os
+
+curr_dir = os.path.dirname(__file__)
+logfile = os.path.join(curr_dir, '../logging.log')
 
 logger = logging.getLogger("pogo-spotted")
 logger.setLevel(logging.DEBUG)
 
-fh = logging.FileHandler('logging.log')
+fh = logging.FileHandler(logfile)
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
