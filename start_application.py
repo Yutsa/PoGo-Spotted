@@ -28,17 +28,24 @@ def index():
 
 @app.route('/map/', methods=['POST', 'GET'])
 def map():
-    pokemon_dict = create_coord_json(DATABASE)
-    pokemon_list = create_pokemons_list()
     ids_to_hide = ()
+    pokemon_dict = dict()
+    pokemon_list = create_pokemons_list()
+    
     if request.method == 'POST':
-        ids_to_hide = request.form.getlist('ids[]')
-        server_logger.debug("Hiding the following ids: " + str(ids_to_hide))
+        ids_to_hide = request.form.getlist('pkm_ids')
+        server_logger.debug("Hiding the following ids: "
+                            + str(ids_to_hide))
+        pokemon_dict = create_coord_json(DATABASE, ids_to_hide)
+
+    else:
+        pokemon_dict = create_coord_json(DATABASE)
+
+    server_logger.debug("JSON received: " + pokemon_dict)
     return render_template('map.html',
                            pkm_info=pokemon_dict,
                            gmap_api_key=gmap_api_key,
-                           pokemons=pokemon_list,
-                           ids_to_hide=ids_to_hide)
+                           pokemons=pokemon_list)
 
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():

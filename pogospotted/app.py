@@ -13,12 +13,11 @@ app_logger = logging.getLogger('pogo-spotted.app')
 here = os.path.dirname(__file__)
 
 
-def create_coord_json(db, id_pokemon=1):
+def create_coord_json(db, ids_to_hide=[]):
     """Creates a JSON object of the coordinates of every spawn of the
     pokemon_id supplied. For that it looks into the db database."""
     connection = sqlite3.connect(db)
     cursor = connection.cursor()
-    id_pokemon = (id_pokemon,)
 
     # Create the table if it doesn't exist.
     cursor.execute("CREATE TABLE IF NOT EXISTS 'sightings'" \
@@ -27,8 +26,26 @@ def create_coord_json(db, id_pokemon=1):
                    "'enc_date' TEXT, 'lat' REAL,"\
                    "'lng' REAL)")
 
-    answer = cursor.execute("SELECT *" \
-                            "FROM sightings")
+    # We have ids to hide if the list isn't empty
+    hide_id = len(ids_to_hide) != 0
+    
+    if hide_id:
+        test = tuple([int(i) for i in ids_to_hide])
+
+        ids_to_hide = tuple([int(i) for i in ids_to_hide])
+        ids_to_hide = '(%s)' % ', '.join(map(repr, ids_to_hide))        
+        
+        request = "SELECT * FROM sightings WHERE pokemon_id " \
+                  "NOT IN {}".format(ids_to_hide)
+
+        app_logger.debug("Request: " + request)
+        
+        answer = cursor.execute(request)
+
+    else:
+        answer = cursor.execute("SELECT * "\
+                                "FROM sightings ")
+        
 
     dict_coord = dict()
 
@@ -37,6 +54,8 @@ def create_coord_json(db, id_pokemon=1):
                                 "lng": entry[4], "date": entry[2]}
 
     coord_json = json.dumps(dict_coord)
+    app_logger.debug("JSON: " + coord_json)
+    connection.close()
     return coord_json
 
 def create_pokemons_list():
@@ -75,3 +94,4 @@ def add_pokemon_to_db(id, enc_date, lat, lng, db_name):
                    )
     cursor.execute(request)
     conn.commit()
+    conn.close()
