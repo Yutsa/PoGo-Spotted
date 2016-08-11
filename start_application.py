@@ -41,21 +41,9 @@ def index():
 
 @app.route('/map/', methods=['POST', 'GET'])
 def map():
-    ids_to_hide = ()
-    pokemon_dict = dict()
     pokemon_list = create_pokemons_list()
-    
-    if request.method == 'POST':
-        ids_to_hide = request.form.getlist('pkm_ids')
-        server_logger.debug("Hiding the following ids: "
-                            + str(ids_to_hide))
-        pokemon_dict = create_coord_json(DATABASE, ids_to_hide)
-        return pokemon_dict
+    pokemon_dict = create_coord_json(DATABASE)
 
-    else:
-        pokemon_dict = create_coord_json(DATABASE)
-
-    server_logger.debug("JSON received: " + pokemon_dict)
     return render_template('map.html',
                            pkm_info=pokemon_dict,
                            gmap_api_key=gmap_api_key,
