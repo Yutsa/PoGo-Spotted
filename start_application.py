@@ -39,7 +39,7 @@ def index():
     return render_template('index.html')
                 
 
-@app.route('/map/', methods=['POST', 'GET'])
+@app.route('/map/')
 def map():
     pokemon_list = create_pokemons_list()
     pokemon_dict = create_coord_json(DATABASE)
