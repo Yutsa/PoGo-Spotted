@@ -111,9 +111,6 @@
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript">
-  var coordinates = {{pkm_info|safe}};
-</script>
 
 <script
    src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap"

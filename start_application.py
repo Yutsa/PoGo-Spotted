@@ -37,6 +37,10 @@ def map():
                            gmap_api_key=gmap_api_key,
                            pokemons=pokemon_list)
 
+@app.route('/getCoord/')
+def getCoord():
+    return create_coord_json(DATABASE);
+
 @app.route('/sightings/', methods=['POST', 'GET'])
 def sightings():
     if request.method == 'GET':

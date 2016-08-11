@@ -2,6 +2,17 @@ var map;
 var mapDiv = document.getElementById('map');
 var markers = [];
 var geocoder;
+var coordinates;
+
+$.ajax({
+    type: "GET",
+    url: "/getCoord/",
+    success: function(answer) {
+	coordinates = JSON.parse(answer);
+
+	console.log(coordinates);
+    }
+});
 
 function initMap() {
     map = new google.maps.Map(mapDiv, {
