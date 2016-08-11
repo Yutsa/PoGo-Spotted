@@ -23,11 +23,13 @@ def create_coord_json(db):
     cursor.execute("CREATE TABLE IF NOT EXISTS 'sightings'" \
                    "('enc_id' INT PRIMARY KEY,"\
                    "'pokemon_id' INT,"\
-                   "'enc_date' TEXT, 'lat' REAL,"\
+                   "'enc_date' DATE, 'lat' REAL,"\
                    "'lng' REAL)")
 
-    answer = cursor.execute("SELECT * "\
-                                "FROM sightings ")
+    answer = cursor.execute("SELECT enc_id, pokemon_id, "\
+                            "strftime('%d/%m/%Y %H:%M', enc_date) "\
+                            "AS enc_date, "\
+                            "lat, lng FROM sightings")
         
     dict_coord = dict()
 
