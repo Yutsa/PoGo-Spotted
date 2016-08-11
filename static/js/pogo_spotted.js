@@ -9,7 +9,7 @@ $.ajax({
     url: "/getCoord/",
     success: function(answer) {
 	coordinates = JSON.parse(answer);
-
+	updateMarkers();
 	console.log(coordinates);
     }
 });
