@@ -62,16 +62,11 @@ def add_pokemon_to_db(id, enc_date, lat, lng, db_name):
                    "'pokemon_id' INT,"\
                    "'enc_date' TEXT, 'lat' REAL,"\
                    "'lng' REAL)")
-    
-    request = "INSERT INTO 'sightings' (enc_id, pokemon_id, enc_date,"\
-              "lat, lng) VALUES ({}, {}, "\
-                   "'{}', {}, {})".format(
-                       time.time(),
-                       id,
-                       enc_date,
-                       lat,
-                       lng
-                   )
-    cursor.execute(request)
+
+    param = (time.time(), id, enc_date, lat, lng)
+    cursor.execute("INSERT INTO 'sightings' " \
+                   "(enc_id, pokemon_id, enc_date, lat, lng) "\
+                   "VALUES (?, ?, ?, ?, ?)", param)
+
     conn.commit()
     conn.close()
