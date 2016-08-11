@@ -1,6 +1,7 @@
 var map;
 var mapDiv = document.getElementById('map');
 var markers = [];
+var geocoder;
 
 function initMap() {
     map = new google.maps.Map(mapDiv, {
@@ -20,6 +21,7 @@ function initMap() {
         });
     }
 
+    geocoder = new google.maps.Geocoder();
     updateMarkers();
 }
 
@@ -175,3 +177,20 @@ $("#filter_date").submit(function(event) {
 
     hidePkmByDate(start_time, end_time);
 });
+
+function geocodeAddress(geocoder, resultsMap)  {
+    var address = $("#address").val()
+    geocoder.geocode({'address': address}, function(results, status) {
+	if (status === 'OK') {
+	    resultsMap.setCenter(results[0].geometry.location);
+	} else {
+	    console.log("Geocode wasn't successful for the following "+
+			"reason: " + status);
+	}
+    });
+}
+
+document.getElementById('submit_geocode').addEventListener('click', function() {
+    geocodeAddress(geocoder, map);
+});
+
