@@ -51,6 +51,17 @@ network.
 The project is configured to use the debug settings for now, you can
 change it by remove `debug=True` in `app.run(host='0.0.0.0', debug=True)` (It's inside start_application.py)
 
+Features
+=========
+
+* Report pokemon sighting
+* Use geolocalisation or enter an address and drag the marker to your precise location
+* Look at a map of every reported sightings
+* Click on the pokemon sprite to display the sighting date
+* Hide pokemons you don't want to see on the map
+* Only show pokemon that appeared during a specific timeframe
+
+
 How to contribute
 ===================
 
