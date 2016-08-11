@@ -30,7 +30,7 @@
 <main class="container">
   <div class="row">
     <br />
-     <form action="" method="post">
+     <form action="." method="post" id="form_ids_to_hide">
       <div class="input-field col s8">
 	<select multiple class="icons" name="pkm_ids">
 	  	{% for pokemon_name in pokemons %}
@@ -65,7 +65,8 @@
 
 {% block script %}
 <script type="text/javascript">
-  var coordinates = {{pkm_info|safe}}
+  var coordinates = {{pkm_info|safe}};
+  console.log("First coordinates", coordinates);
 </script>
 
 <script

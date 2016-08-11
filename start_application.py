@@ -2,6 +2,19 @@
 # -*- coding: utf-8 -*-
 
 """This script launches the server and handles the routing and so on."""
+
+"""
+TODO: Need to implement the pokemon to hide using AJAX. When the user
+submit the form, it should call an AJAX request. The AJAX will send the
+POST data. The python script will receive the data and return a JSON
+file of the coordinates. The AJAX will assign the coordinates to its
+variable and update the map.
+
+See https://openclassrooms.com/courses/un-site-web-dynamique-avec-jquery/le-fonctionnement-de-ajax for information on AJAX.
+
+Next I'll have to implement a way to only display pokemon that appeared
+in a certain timeframe.
+"""
 from flask import Flask, render_template, jsonify, request
 
 import logging
@@ -37,6 +50,7 @@ def map():
         server_logger.debug("Hiding the following ids: "
                             + str(ids_to_hide))
         pokemon_dict = create_coord_json(DATABASE, ids_to_hide)
+        return pokemon_dict
 
     else:
         pokemon_dict = create_coord_json(DATABASE)

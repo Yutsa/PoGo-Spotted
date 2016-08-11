@@ -30,6 +30,11 @@ function addMarker(location, pkm_ic, enc_date) {
 	icon: pkm_ic
     });
 
+    addInfoWindow(marker, enc_date);
+    markers.push(marker);
+}
+
+function addInfoWindow(marker, enc_date) {
     var infoWindow = new google.maps.InfoWindow({
 	content: enc_date
     });
@@ -39,8 +44,29 @@ function addMarker(location, pkm_ic, enc_date) {
 	    info.open(map, marker);
 	}
     }) (marker, infoWindow));
-    
-    markers.push(marker);
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
 }
 
 function updateMarkers() {
@@ -54,10 +80,6 @@ function updateMarkers() {
 
 	addMarker(coordObj, img, enc_date);
     }
-}
-
-function clearMarkers() {
-  setMapOnAll(null);
 }
 
 /* This will be the base for the AJAX request. */
@@ -76,7 +98,11 @@ $("#form_ids_to_hide").submit(function(event) {
 	success: function(answer) {
 	    console.log("Coordinates before:", coordinates)
 	    coordinates = JSON.parse(answer);
-	    clearMarkers();
+	    /* Here to hide the markers we want we delete all
+	     markers and then recreate only the one we need.
+	    This is not a good way to do this as the time complexity
+	    is dependant on the numbers of markers. */
+	    deleteMarkers();
 	    updateMarkers();
 	    console.log(coordinates);
 	}

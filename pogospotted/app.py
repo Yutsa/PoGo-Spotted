@@ -54,7 +54,7 @@ def create_coord_json(db, ids_to_hide=[]):
                                 "lng": entry[4], "date": entry[2]}
 
     coord_json = json.dumps(dict_coord)
-    app_logger.debug("JSON: " + coord_json)
+    app_logger.debug("JSON: " + str(coord_json))
     connection.close()
     return coord_json
 
@@ -62,7 +62,6 @@ def create_pokemons_list():
     """
     Creates a dict with all pokemon names and their pokemon_id as key
     """
-#    file = open('static/pokemons.txt', 'r')
     file = open(os.path.join(here, '../static/pokemons.txt'), 'r')
     pokemons = list()
     for line in file:
