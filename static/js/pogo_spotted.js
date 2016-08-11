@@ -4,16 +4,6 @@ var markers = [];
 var geocoder;
 var coordinates;
 
-$.ajax({
-    type: "GET",
-    url: "/getCoord/",
-    success: function(answer) {
-	coordinates = JSON.parse(answer);
-	updateMarkers();
-	console.log(coordinates);
-    }
-});
-
 function initMap() {
     map = new google.maps.Map(mapDiv, {
 	center: {lat: 49.774, lng: 4.722},
@@ -33,7 +23,15 @@ function initMap() {
     }
 
     geocoder = new google.maps.Geocoder();
-    updateMarkers();
+
+    $.ajax({
+	type: "GET",
+	url: "/getCoord/",
+	success: function(answer) {
+	    coordinates = JSON.parse(answer);
+	    updateMarkers();
+	}
+    });
 }
 
 function addMarker(location, pkm_ic, enc_date, pk_id) {
