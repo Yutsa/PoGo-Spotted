@@ -28,7 +28,8 @@ function addMarker(location, pkm_ic, enc_date, pk_id) {
 	position: location,
 	map: map,
 	icon: pkm_ic,
-	pkm_id: pk_id
+	pkm_id: pk_id,
+	enc_date: enc_date
     });
 
     addInfoWindow(marker, enc_date);
@@ -83,7 +84,7 @@ function updateMarkers() {
     }
 }
 
-function changeMarkerVisibility(ids_to_hide) {
+function hidePkmById(ids_to_hide) {
     console.log(ids_to_hide);
     for (var i = 0; i < markers.length; i++) {
 	/* If we need to hide the marker */
@@ -97,13 +98,45 @@ function changeMarkerVisibility(ids_to_hide) {
     }
 }
 
+function hidePkmByDate(date_start, date_end) {
+    for (var i = 0; i < markers.length; i++) {
+	pkm_date = new Date(markers[i]["enc_date"]);
+	if (!isBetweenDates(pkm_date, date_start, date_end))
+	    markers[i].setMap(null);
+	else
+	    markers[i].setMap(map);
+    }
+}
+
 function inArray(value, array) {
     if ($.inArray(value, array) == -1)
 	return false;
     return true;
 }
 
-/* This will be the base for the AJAX request. */
+function isValidDate(dateString)
+{
+
+    if (!/^(?:(?:31\/(?:0?[13578]|1[02]))\1|(?:(?:29|30)\/(?:0?[1,3-9]|1[0-2])\/))(?:(?:1[6-9]|[2-9]\d)?\d{2}) ([01][0-9]|2[0-3]):[0-5][0-9]$|^(?:29\/0?2\/(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))) ([01][0-9]|2[0-3]):[0-5][0-9]$|^(?:0?[1-9]|1\d|2[0-8])\/(?:(?:0?[1-9])|(?:1[0-2]))\/(?:(?:1[6-9]|[2-9]\d)?\d{2}) ([01][0-9]|2[0-3]):[0-5][0-9]$/.test(dateString))
+	return false;
+    return true;
+
+};
+
+function checkDateForm() {
+    var begin_time = $("#begin_time").val();
+    var end_time = $("#end_time").val();
+
+    if (isValidDate(begin_time) && isValidDate(end_time))
+	console.log("Input correct");
+    else {
+	console.log("Input incorrect");
+	return false;
+    }
+    
+}
+
+/* Hide pokemons when submitting */
 $("#form_ids_to_hide").submit(function(event) {
 
     /* stop form from submitting normally */
@@ -118,5 +151,27 @@ $("#form_ids_to_hide").submit(function(event) {
 	ids.push(serialized[i]["value"]);
     }
 
-    changeMarkerVisibility(ids);
+    hidePkmById(ids);
+});
+
+function isBetweenDates(date_pkm, date_start, date_end) {
+    if (date_pkm >= date_start && date_pkm <= date_end)
+	return true;
+    return false;
+}
+
+/* Filter by date when submitting form */
+$("#filter_date").submit(function(event) {
+
+    event.preventDefault();
+
+    var serialized = $(this).serializeArray();
+
+    var start_time = serialized[0]["value"];
+    var end_time = serialized[1]["value"];
+
+    start_time = new Date(start_time);
+    end_time = new Date(end_time);
+
+    hidePkmByDate(start_time, end_time);
 });
