@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block nav %}
-<nav class="light-blue">
+<nav class="light-blue row">
   <div class="nav-wrapper">
     <a href="#!" class="brand-logo">PoGo-Spotted</a>
     <a href="#" data-activates="navbar"
@@ -24,82 +24,77 @@
     </ul>
   </div>
 </nav>
+
 {% endblock %}
 
 {% block main %}
 <main class="container">
   <div class="row">
-
-    <br />
-    <form id="form_ids_to_hide">
-      <div class="row">
-	<div class="input-field col s8">
-	  <select multiple class="icons" name="pkm_ids">
-	    {% for pokemon_name in pokemons %}
-	    {% set pokemon_id = pokemons.index(pokemon_name) + 1 %}
-	    {% set img = "img/sprites/" ~ pokemon_id ~ ".png" %}
-	    <option value="{{pokemon_id}}"
-		    data-icon="{{url_for('static', filename=img)}}"
-		    class="right">{{pokemon_name|title}}</option>
-	    {% endfor %}
-	  </select>
-	  <label>Pokemons to Hide</label>
-	</div>
-	
-	<div class="input-field col s4">
-	  <div class="right-align">
-	    <button class="btn light-blue waves-effect waves-light"
-		    type="submit" name="submit">
-	      Hide <i class="material-icons right">send</i>
-	    </button>
-	  </div>
+    <form id="form_ids_to_hide" class="row">
+      <div class="input-field col s8">
+	<select multiple class="icons" name="pkm_ids">
+	  {% for pokemon_name in pokemons %}
+	  {% set pokemon_id = pokemons.index(pokemon_name) + 1 %}
+	  {% set img = "img/sprites/" ~ pokemon_id ~ ".png" %}
+	  <option value="{{pokemon_id}}"
+		  data-icon="{{url_for('static', filename=img)}}"
+		  class="right">{{pokemon_name|title}}</option>
+	  {% endfor %}
+	</select>
+	<label>Pokemons to Hide</label>
+      </div>
+      
+      <div class="input-field col s4">
+	<div class="right-align">
+	  <button class="btn light-blue waves-effect waves-light"
+		  type="submit" name="submit">
+	    Hide <i class="material-icons right">send</i>
+	  </button>
 	</div>
       </div>
     </form>
 
-     <form id="filter_date">
-       <div class="row">
-	 <div class="input-field col s12 m5">
-	   <input type="text" name="begin_time" id="begin_time"
-		  placeholder="02/01/2016 19:45" required/>
-	   <label for="begin_time">
-	     Enter the start date (dd/mm/yyy hh:mm)
-	   </label>
-	 </div>
-	 <div class="input-field col s12 m5">
-	   <input type="text" name="end_time" id="end_time"
-		  placeholder="02/01/2016 20:45" required/>
-	   <label for="end_time">
-	     Enter the end date (dd/mm/yyy hh:mm)
-	   </label>
-	 </div>
-	 <div class="input-field col s12 m2">
-	   <div class="right-align">
-	     <button class="btn light-blue waves-effect waves-light"
-		     type="submit" name="submit"
-		     onclick="return checkDateForm();">
-	       Filter
-	     </button>
-	   </div>
-	 </div>
-       </div>
-     </form>
+    <form id="filter_date" class="row">
+      <div class="input-field col s6 m5">
+	<input type="text" name="begin_time" id="begin_time"
+	       placeholder="02/01/2016 19:45" required/>
+	<label for="begin_time">
+	  Enter the start date (dd/mm/yyy hh:mm)
+	</label>
+      </div>
+      <div class="input-field col s6 m5">
+	<input type="text" name="end_time" id="end_time"
+	       placeholder="02/01/2016 20:45" required/>
+	<label for="end_time">
+	  Enter the end date (dd/mm/yyy hh:mm)
+	</label>
+      </div>
+      <div class="input-field col s4 offset-s4 m2">
+	<div class="right-align">
+	  <button class="btn light-blue waves-effect waves-light"
+		  type="submit" name="submit"
+		  onclick="return checkDateForm();">
+	    Filter
+	  </button>
+	</div>
+      </div>
+    </form>
 
 
-     <div class="row">
-       <div class="input-field col s8 m10">
-	 <input type="text" name="address" id="address"
-		placeholder="Enter address here." />
-       </div>
-       <div class="input-field col s4 m2">
-	 <div class="right-align">
-	   <button class="btn light-blue waves-effect waves-light"
-		   id="submit_geocode">
-	     Send</button>
-	 </div>
-       </div>
-     </div>
-     
+    <div class="row">
+      <div class="input-field col s8 m10">
+	<input type="text" name="address" id="address"
+	       placeholder="Enter address here." />
+      </div>
+      <div class="input-field col s4 m2">
+	<div class="right-align">
+	  <button class="btn light-blue waves-effect waves-light"
+		  id="submit_geocode">
+	    Send</button>
+	</div>
+      </div>
+    </div>
+    
   </div>
   
   <div class="row">
