@@ -2,6 +2,8 @@ var map;
 var mapDiv = document.getElementById('map');
 var markerPlayer;
 var spawnMarkers = [];
+var nearbyMarkers = [];
+var nearbyCircles = [];
 var coordinates;
 var geocoder;
 
@@ -23,11 +25,11 @@ function initMap() {
 	fillColor: '#6666ff',
 	strokeColor: '#FF0000',
 	strokeOpacity: 0.8,
-	fillOpacity: 0.35,
+	fillOpacity: 0.55,
 	map: map,
 	center: pos,
 	radius: 200
-    })
+    });
 
     geocoder = new google.maps.Geocoder();
 
@@ -91,6 +93,49 @@ function addInfoWindow(marker, enc_date) {
 	}) (marker, infoWindow));
 }
 
+/* Trace a new yellow circle at the current geolocalisation */
+function traceNewCircle() {
+     if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+		lat: position.coords.latitude,
+		lng: position.coords.longitude
+            };
+	    var marker = new google.maps.Marker({
+		map: map,
+		icon: "../static/img/yellow-dot.png",
+		draggable: true,
+		position: pos
+	    });
+	    nearbyMarkers.push(marker);
+
+	    var nCircle = new google.maps.Circle({
+		fillColor: '#ffff66',
+		strokeColor: 'green',
+		strokeOpacity: 0.8,
+		fillOpacity: 0.35,
+		map: map,
+		center: pos,
+		radius: 200
+	    });
+	    nearbyCircles.push(nCircle);
+
+	    marker.bindTo("position", nCircle, "center");
+        });
+    }
+}
+
+function clearCircles() {
+    for (var i = 0; i < nearbyCircles.length; i++) {
+	nearbyCircles[i].setMap(null);
+	nearbyMarkers[i].setMap(null);
+    }
+    nearbyCircles.length = 0;
+    nearbyMarkers.length = 0;
+    console.log(nearbyMarkers);
+    console.log(nearbyCircles);
+}
+
 $("#update_pos").click(function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -98,7 +143,6 @@ $("#update_pos").click(function() {
 		lat: position.coords.latitude,
 		lng: position.coords.longitude
             };
-
 	    map.setCenter(pos);
 	    markerPlayer.setPosition(pos);
         });
@@ -117,3 +161,6 @@ $("#submit_geocode").click(function() {
 	}
     });
 })
+
+$("#trace_circle").click(traceNewCircle);
+$("#clear_circles").click(clearCircles);
