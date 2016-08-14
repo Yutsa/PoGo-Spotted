@@ -3,6 +3,7 @@ var mapDiv = document.getElementById('map');
 var markerPlayer;
 var spawnMarkers = [];
 var coordinates;
+var geocoder;
 
 function initMap() {
     var pos = {lat: 49.774, lng: 4.722};
@@ -27,6 +28,8 @@ function initMap() {
 	center: pos,
 	radius: 200
     })
+
+    geocoder = new google.maps.Geocoder();
 
     markerPlayer.setPosition(pos);
     markerPlayer.bindTo("position", circle, "center");
@@ -101,3 +104,16 @@ $("#update_pos").click(function() {
         });
     }
 });
+
+$("#submit_geocode").click(function() {
+    var address = $("#address").val();
+    geocoder.geocode({'address': address}, function(results, status) {
+	if (status === 'OK') {
+	    map.setCenter(results[0].geometry.location);
+	    markerPlayer.setPosition(results[0].geometry.location);
+	} else {
+	    console.log("Geocode wasn't successful for the following "+
+			"reason: " + status);
+	}
+    });
+})
