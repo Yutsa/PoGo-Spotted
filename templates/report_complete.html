@@ -11,17 +11,19 @@
 	<ul class="right hide-on-med-and-down">
 	    <li><a href="{{url_for('index')}}">Home</a></li>
 	    <li><a href="{{url_for('map')}}">Map</a></li>
+	    <li><a href="{{url_for('nearby')}}">Nearby</a></li>
 	</ul>
 	<ul class="side-nav" id="navbar">
 	    <li><a href="{{url_for('index')}}">Home</a></li>
 	    <li><a href="{{url_for('map')}}">Map</a></li>
+	    <li><a href="{{url_for('nearby')}}">Nearby</a></li>
 	</ul>
     </div>
 </nav>
 {% endblock %}
 
 {% block main %}
-<main class="valign-wrapper">
+<main class="valign-wrapper" style="height: 92vh">
   <div class="container valign">
     <div class="row">
       <h1 class="col s12 center-align">Sigthing Report Submitted</h1>
@@ -36,3 +38,4 @@
   </div>  
 </main>
 {% endblock %}
+

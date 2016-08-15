@@ -58,6 +58,10 @@ def sightings():
                           DATABASE)
         
         return render_template('report_complete.html')
+
+@app.route('/nearby/')
+def nearby():
+    return render_template('nearby.html', gmap_api_key=gmap_api_key)
     
 if __name__ == '__main__':
     app.secret_key = 'iTwiaKuelcadBajLanEacikyu'

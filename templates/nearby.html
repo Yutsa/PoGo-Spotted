@@ -1,0 +1,91 @@
+{% extends "skeleton.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',
+			     filename='css/map.css')}}"
+      type="text/css" media="screen" />
+{% endblock %}
+
+{% block nav %}
+<nav class="light-blue row">
+  <div class="nav-wrapper">
+    <a href="#!" class="brand-logo">PoGo-Spotted</a>
+    <a href="#" data-activates="navbar"
+       class="button-collapse">
+      <i class="material-icons">menu</i>
+    </a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="{{url_for('index')}}">Home</a></li>
+      <li><a href="{{url_for('sightings')}}">Report Sighting</a></li>
+      <li><a href="{{url_for('map')}}">Map</a></li>      
+    </ul>
+    <ul class="side-nav" id="navbar">
+      <li><a href="{{url_for('index')}}">Home</a></li>
+      <li><a href="{{url_for('sightings')}}">Report Sighting</a></li>
+      <li><a href="{{url_for('map')}}">Map</a></li>
+    </ul>
+  </div>
+</nav>
+{% endblock %}
+
+{% block main %}
+<main class="container">
+
+  <div class="row">
+    <div class="input-field col s12">
+      <div class="center-align">
+	<button class="btn light-blue waves-effect waves-light"
+		id="update_pos">
+	  Update Geolocalisation
+	</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+	<button class="btn light-blue waves-effect waves-light col s5"
+		id="trace_circle">
+	  New Circle
+	</button>
+
+	<button class="btn light-blue waves-effect waves-light col s5
+		       offset-s2"
+		id="clear_circles"> 
+	  Clear
+	</button>
+  </div>
+  
+   <div class="row">
+      <div class="input-field col s6 m10">
+	<input type="text" name="address" id="address"
+	       placeholder="Enter address here." class="truncate" />
+      </div>
+      <div class="input-field col s6 m2">
+	<div class="right-align">
+	  <button class="btn light-blue waves-effect waves-light"
+		  id="submit_geocode">
+	    Update Pos</button>
+	</div>
+      </div>
+   </div>
+   
+  <div class="row">
+    <div id="map" class="col s6 m12">
+      
+    </div>
+  </div>
+  
+</main>
+
+{% endblock %}
+
+{% block script %}
+
+<script
+   src="https://maps.googleapis.com/maps/api/js?key={{gmap_api_key}}&callback=initMap"
+   async defer></script>
+
+<script src="{{url_for('static',
+	     filename='js/nearby.js')}}"></script>
+
+{% endblock %}
