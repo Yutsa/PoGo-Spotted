@@ -58,6 +58,10 @@ function initMap() {
 	    updateMarkers();
 	}
     });
+
+    google.maps.event.addListener(map, 'click', function(event) {
+	markerPlayer.setPosition(event.latLng);
+    });
 }
 
 function updateMarkers() {
