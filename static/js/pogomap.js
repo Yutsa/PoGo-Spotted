@@ -38,6 +38,12 @@ function initMap() {
         document.getElementById('lat').value = event.latLng.lat();
         document.getElementById('lng').value = event.latLng.lng();
     });
+
+    google.maps.event.addListener(map, 'click', function(event) {
+	marker.setPosition(event.latLng);
+	document.getElementById('lat').value = event.latLng.lat();
+        document.getElementById('lng').value = event.latLng.lng();
+    });
 }
 
 function geocodeAddress(geocoder, resultsMap)  {
@@ -63,3 +69,4 @@ document.getElementById('submit_geocode').addEventListener('click', function(eve
     event.preventDefault();
     geocodeAddress(geocoder, map);
 });
+
