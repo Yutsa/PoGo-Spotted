@@ -9,7 +9,7 @@ import os
 import logging
 from pogospotted.logger import logger
 
-app_logger = logging.getLogger('pogo-spotted.app)'
+app_logger = logging.getLogger('pogo-spotted.app')
 here = os.path.dirname(__file__)
 
 
