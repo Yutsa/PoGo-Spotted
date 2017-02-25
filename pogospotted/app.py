@@ -30,7 +30,7 @@ def create_coord_json(db):
                             "strftime('%d/%m/%Y %H:%M', enc_date) "\
                             "AS enc_date, "\
                             "lat, lng FROM sightings")
-        
+
     dict_coord = dict()
 
     for entry in answer:
@@ -51,14 +51,14 @@ def create_pokemons_list():
         pkm_list = line.split(',')
         pokemons.append(pkm_list[1])
     return pokemons
-    
+
 def add_pokemon_to_db(id, enc_date, lat, lng, db_name):
     """
     Adds a pokemon sighting to the databse
     """
     conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
-    
+
     cursor.execute("CREATE TABLE IF NOT EXISTS 'sightings'" \
                    "('enc_id' INT PRIMARY KEY,"\
                    "'pokemon_id' INT,"\
